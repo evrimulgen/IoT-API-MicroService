@@ -1,0 +1,7 @@
+---
+applications:
+- name: the-thing
+  memory: 1G 
+  instances: 1
+  host: the-thing
+  path: ./build/libs/arduino-0.0.1-SNAPSHOT.jar
