@@ -3,6 +3,7 @@ package io.pivotal.sensor.rest;
 import io.pivotal.sensor.model.RFID;
 import io.pivotal.sensor.model.RFIDEvent;
 import io.pivotal.sensor.service.RFIDSensorService;
+import io.pivotal.sensor.service.SensorAPIService;
 
 import java.util.Date;
 
@@ -26,33 +27,38 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class RfidRestAPI {
+	
 
+//	@Autowired
+//	private RFIDSensorService rfidSensorService;
+	
 	@Autowired
-	private RFIDSensorService rfidSensorService;
+	private SensorAPIService sensor;
 	
 	//http://localhost:8080/get-all-rfids
 	@RequestMapping(value="/get-all-rfids", method=RequestMethod.GET)
 	public Iterable<RFID> getAllRFIDs() {	
-		return rfidSensorService.findAllRfid();
+		System.out.println("Within IoT RFID Rest API");
+		return sensor.getAllRFIDs();
 	}
 	
 	//http://localhost:8080/get-rfid-events-by-rfid/0909200181
 	@RequestMapping(value="/get-rfid-events-by-rfid/{rfid}", method=RequestMethod.GET)
 	public Iterable<RFIDEvent> getRFIDEventByRfid(@PathVariable String rfid) {
-		return rfidSensorService.findAllRfidEventsByRfid(rfid);
+		return sensor.findAllRfidEventsByRfid(rfid);
 	}
 	
 	//http://localhost:8080/get-rfid-by-user/3333
 	@RequestMapping(value="/get-rfid-by-user/{userId}", method=RequestMethod.GET)
 	public RFID getRFIDByUserId(@PathVariable Long userId) {	
-		return rfidSensorService.findRFIDByUserId(userId);
+		return sensor.findRFIDByUserId(userId);
 	}
 	
 	//Example http://localhost:8080/get-all-rfid-events-by-rfid/12/between/2014-06-12T00:00:00.000Z/2014-11-12T00:00:00.000Z
 	@RequestMapping(value="/get-all-rfid-events-by-rfid/{rfid}/between/{startDate}/{endDate}", method=RequestMethod.GET)
 	public Iterable<RFIDEvent> getAllRFIDEventsByRfidBetween(@PathVariable String rfid, 
 			@PathVariable  @DateTimeFormat(iso = ISO.DATE) Date startDate,@PathVariable  @DateTimeFormat(iso = ISO.DATE) Date endDate) {	
-		return rfidSensorService.findAllRfidEventsByRfidBetween(rfid, startDate, endDate);
+		return sensor.findAllRfidEventsByRfidBetween(rfid, startDate, endDate);
 	}
 	
 	

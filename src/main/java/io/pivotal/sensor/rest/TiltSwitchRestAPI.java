@@ -2,6 +2,7 @@ package io.pivotal.sensor.rest;
 
 import io.pivotal.sensor.model.TiltSwitch;
 import io.pivotal.sensor.model.TiltSwitchEvent;
+import io.pivotal.sensor.service.SensorAPIService;
 import io.pivotal.sensor.service.TiltSwitchSensorService;
 
 import java.util.Date;
@@ -30,29 +31,32 @@ public class TiltSwitchRestAPI {
 	@Autowired
 	private TiltSwitchSensorService tiltSwitchSensorService;
 	
+	@Autowired
+	private SensorAPIService sensor;
+	
 	//http://localhost:8080/get-tilt-switches-by-tiltId/33
 	@RequestMapping(value="/get-tilt-switches-by-tiltId/{tiltSwitchId}", method=RequestMethod.GET)
 	public TiltSwitch getTiltSwitchByTiltSwitchID(@PathVariable String tiltSwitchId) {
-		return tiltSwitchSensorService.getTiltSwitchByTiltSwitchID(tiltSwitchId);
+		return sensor.getTiltSwitchByTiltSwitchID(tiltSwitchId);
 	}
 	
 	//http://localhost:8080/get-all-tilt-switches
 	@RequestMapping(value="/get-all-tilt-switches", method=RequestMethod.GET)
 	public Iterable<TiltSwitch> getAllTiltSwitches() {	
-		return tiltSwitchSensorService.getAllTiltSwitches();
+		return sensor.getAllTiltSwitches();
 	}
 	
 	//http://localhost:8080/get-tilt-events-by-tiltId/34
 	@RequestMapping(value="/get-tilt-events-by-tiltId/{tiltSwitchId}", method=RequestMethod.GET)
 	public Iterable<TiltSwitchEvent> getAllTiltSwitchEventsByTiltSwitchID(@PathVariable String tiltSwitchId) {	
-		return tiltSwitchSensorService.getAllTiltSwitchEventsByTiltSwitchID(tiltSwitchId);
+		return sensor.getAllTiltSwitchEventsByTiltSwitchID(tiltSwitchId);
 	}
 	
 	//http://localhost:8080/get-all-tilt-events-by-tiltId/33/between/2014-06-12T00:00:00.000Z/2014-11-12T00:00:00.000Z
 	@RequestMapping(value="/get-all-tilt-events-by-tiltId/{tiltSwitchId}/between/{startDate}/{endDate}", method=RequestMethod.GET)
 	public Iterable<TiltSwitchEvent> getAllTiltSwitchEventsByTiltSwitchIDBetween(@PathVariable String tiltSwitchId, 
 			@PathVariable  @DateTimeFormat(iso = ISO.DATE) Date startDate, @PathVariable  @DateTimeFormat(iso = ISO.DATE) Date endDate) {	
-		return tiltSwitchSensorService.getAllTiltSwitchEventsByTiltSwitchIDBetween(tiltSwitchId, startDate, endDate);
+		return sensor.getAllTiltSwitchEventsByTiltSwitchIDBetween(tiltSwitchId, startDate, endDate);
 	}
 
 
