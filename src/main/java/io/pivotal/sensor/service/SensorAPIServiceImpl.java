@@ -42,7 +42,7 @@ public class SensorAPIServiceImpl implements SensorAPIService {
 	public Iterable<RFIDEvent> findAllRfidEventsByRfidBetween(String rfid,
 			Date startDate, Date endDate) {
 		
-		Iterable<RFIDEvent> rfidEvent = rest.getForObject("Http://localhost:2225/get-all-rfid-events-by-rfid-ms/"+rfid
+		Iterable<RFIDEvent> rfidEvent = rest.getForObject("http://localhost:2225/get-all-rfid-events-by-rfid-ms/"+rfid
 				+"/between/"+startDate+"/"+endDate, Iterable.class);
 		return rfidEvent;
 	}

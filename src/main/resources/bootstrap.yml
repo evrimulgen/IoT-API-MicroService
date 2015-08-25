@@ -1,3 +1,7 @@
 spring:
   application:
     name: IoTonEureka
+  cloud:
+    config:
+      uri: http://localhost:8888
+      enabled: true
